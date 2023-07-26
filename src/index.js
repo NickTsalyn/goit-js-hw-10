@@ -194,8 +194,8 @@ const timer = document.querySelector("#timer");
 const requiredInput = getRandomNumber();
 let tryAmount = 4;
 let startGame = false;
-let inputValue
 let timeInterval;
+let inputValue
 
 input.addEventListener("input", onInput);
 button.addEventListener("click", onClick);
@@ -211,9 +211,8 @@ function onInput(evt) {
 }
 
 function onClick() {
-  const guessWord = inputValue.toLowerCase();
   const guessNumber = parseInt(inputValue);
-  if ((guessNumber || guessWord) === requiredInput.toString()) {
+  if ((guessNumber || guessWord) === requiredInput) {
     text.textContent = "Вітаю ви вгадали";
     button.disabled = true;
     clearButton.disabled = false;
