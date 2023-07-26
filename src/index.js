@@ -194,7 +194,7 @@ const timer = document.querySelector("#timer");
 const requiredInput = getRandomNumber();
 let tryAmount = 4;
 let startGame = false;
-let time;
+let inputValue
 let timeInterval;
 
 input.addEventListener("input", onInput);
