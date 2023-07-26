@@ -222,7 +222,8 @@ function onClick() {
     text.textContent = `Мимо, залишилось ${tryAmount--} спроби`;
     clearButton.disabled = true;
     if (tryAmount < 0) {
-      text.textContent = "Ви програли";
+      text.style.fontSize = "36px"
+      text.textContent = "Ви програли(((";
       button.disabled = true;
       clearButton.disabled = false;
       clearInterval(timeInterval);
