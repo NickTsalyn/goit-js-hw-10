@@ -2,6 +2,8 @@ import Notiflix from 'notiflix';
 import debounce from 'lodash.debounce';
 import axios from 'axios';
 import SlimSelect from 'slim-select';
+import { fetchBreeds } from './cat-api';
+import { fetchCatByBreed } from './cat-api';
 
 
 
@@ -15,28 +17,10 @@ const catInfo = document.querySelector('.cat-info');
 const loader = document.querySelector('.loader');
 const error = document.querySelector('.error');
 
-export function fetchBreeds() {
-    return axios
-      .get('https://api.thecatapi.com/v1/breeds')
-      .then(response => response.data)
-      .catch(error => {
-        throw new Error(
-            Notiflix.Notify.failure(`${error.textContent}`))
-      });
-  }
-  
-  export function fetchCatByBreed(breedId) {
-    return axios
-      .get(`https://api.thecatapi.com/v1/images/search?breed_ids=${breedId}`)
-      .then(response => response.data[0])
-      .catch(error => {
-        throw new Error(
-            Notiflix.Notify.failure("`${error.textContent}`")
-        );
-      });
-  }
+
 
 breedSelect.addEventListener('change', handleBreedSelectChange);
+
 
 function handleFetchError() {
   loader.style.display = 'none';
@@ -51,6 +35,7 @@ function handleFetchSuccess(breeds) {
   .join('');
   breedSelect.insertAdjacentHTML('beforeend', option)
 }
+
 
 function handleBreedSelectChange() {
   const selectedBreedId = breedSelect.value;
