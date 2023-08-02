@@ -5,37 +5,37 @@ import SlimSelect from 'slim-select';
 import { fetchBreeds } from './cat-api';
 import { fetchCatByBreed } from './cat-api';
 
-
-
 axios.defaults.headers.common['x-api-key'] =
   'live_vpT8AlM2UzkT2NU9PvSi7LYErckhMQOSy2G7GM3Q13VkTLIhMAj8zKURMQiz92zB';
-
-
 
 const breedSelect = document.querySelector('.breed-select');
 const catInfo = document.querySelector('.cat-info');
 const loader = document.querySelector('.loader');
 const error = document.querySelector('.error');
-
-
+const selectOption = document.querySelector('.select-option')
 
 breedSelect.addEventListener('change', handleBreedSelectChange);
-
 
 function handleFetchError() {
   loader.style.display = 'none';
   error.style.display = 'block';
-  breedSelect.style.display = 'none'
+  breedSelect.style.display = 'none';
+  setTimeout(() => {
+    breedSelect.style.display = 'block';
+    breedSelect.value = '';
+  }, 500);
 }
 
 function handleFetchSuccess(breeds) {
   loader.style.display = 'none';
-  const option = breeds
-  .map(breed => `<option value="${breed.id}">${breed.name}</option>`)
-  .join('');
-  breedSelect.insertAdjacentHTML('beforeend', option)
+  setTimeout(() => {
+    breedSelect.style.display= 'block'
+    const option = breeds
+      .map(breed => `<option value="${breed.id}">${breed.name}</option>`)
+      .join('');
+    breedSelect.insertAdjacentHTML('beforeend', option);
+  }, 500);
 }
-
 
 function handleBreedSelectChange() {
   const selectedBreedId = breedSelect.value;
@@ -61,11 +61,9 @@ function handleBreedSelectChange() {
 window.addEventListener('DOMContentLoaded', () => {
   loader.style.display = 'block';
   error.style.display = 'none';
+  breedSelect.style.display = 'none'
   fetchBreeds().then(handleFetchSuccess).catch(handleFetchError);
 });
-
-
-
 
 // const BASE_URL = 'https://restcountries.com/v3.1/name/';
 // const DEBOUNCE_DELAY = 300;
@@ -156,10 +154,6 @@ window.addEventListener('DOMContentLoaded', () => {
 //   list.innerHTML = '';
 // }
 
-
-
-
-
 // "Гра на вгадування слів або чисел":
 
 // Користувач отримує випадкове слово або число, яке потрібно вгадати.
@@ -170,21 +164,21 @@ window.addEventListener('DOMContentLoaded', () => {
 
 // Користувач має вгадати загадане випадкове число від 1 до 100. Він має 5 спроб на вгадування. При кожній спробі гра повідомляє користувачу, чи було введене число більше чи менше загаданого, і скільки спроб залишилось. Коли користувач вгадує число або вичерпує ліміт спроб, гра закінчується.
 
-const input = document.querySelector("#guessInput");
-const button = document.querySelector("#btn");
-const text = document.querySelector("#message");
-const clearButton = document.querySelector("#clear-btn");
-const timer = document.querySelector("#timer");
+const input = document.querySelector('#guessInput');
+const button = document.querySelector('#btn');
+const text = document.querySelector('#message');
+const clearButton = document.querySelector('#clear-btn');
+const timer = document.querySelector('#timer');
 
 const requiredInput = getRandomNumber();
 let tryAmount = 4;
 let startGame = false;
 let timeInterval;
-let inputValue
+let inputValue;
 
-input.addEventListener("input", onInput);
-button.addEventListener("click", onClick);
-clearButton.addEventListener("click", clear);
+input.addEventListener('input', onInput);
+button.addEventListener('click', onClick);
+clearButton.addEventListener('click', clear);
 
 function onInput(evt) {
   inputValue = evt.target.value.trim();
@@ -198,30 +192,30 @@ function onInput(evt) {
 function onClick() {
   const guessNumber = parseInt(inputValue);
   if ((guessNumber || guessWord) === requiredInput) {
-    text.textContent = "Вітаю ви вгадали";
+    text.textContent = 'Вітаю ви вгадали';
     button.disabled = true;
     clearButton.disabled = false;
     clearInterval(timeInterval);
-    timer.textContent = "";
+    timer.textContent = '';
   } else {
     text.textContent = `Мимо, залишилось ${tryAmount--} спроби`;
     clearButton.disabled = true;
     if (tryAmount < 0) {
-      text.style.fontSize = "36px"
-      text.textContent = "Ви програли(((";
+      text.style.fontSize = '36px';
+      text.textContent = 'Ви програли(((';
       button.disabled = true;
       clearButton.disabled = false;
       clearInterval(timeInterval);
-      timer.textContent = "";
+      timer.textContent = '';
     }
   }
 }
 
 function clear() {
   tryAmount = 4;
-  text.textContent = "";
-  inputValue = "";
-  input.value = "";
+  text.textContent = '';
+  inputValue = '';
+  input.value = '';
   button.disabled = false;
   clearButton.disabled = true;
 }
@@ -241,10 +235,10 @@ function countdown() {
 
       timer.textContent = `${minutesRemain}:${secondsRemain
         .toString()
-        .padStart(2, "0")}`;
+        .padStart(2, '0')}`;
     } else {
       clearInterval(timeInterval);
-      timer.textContent = "";
+      timer.textContent = '';
     }
   }, 1000);
 }
@@ -253,14 +247,14 @@ function startCountdown() {
   countdown();
 }
 
-document.addEventListener("keydown", (evt) => {
-  if (evt.key === "Escape") {
+document.addEventListener('keydown', evt => {
+  if (evt.key === 'Escape') {
     if (clearButton.disabled) {
       return;
     } else {
       clear();
     }
-  } else if (evt.key === "Enter") {
+  } else if (evt.key === 'Enter') {
     onClick();
   }
 });
