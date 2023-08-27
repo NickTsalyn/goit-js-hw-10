@@ -41,13 +41,13 @@ function handleBreedSelectChange() {
   const selectedBreedId = breedSelect.value;
   loader.style.display = 'block';
   catInfo.style.display = 'none';
-  error.style.display = 'none'; l
+  error.style.display = 'none'; 
 
   fetchCatByBreed(selectedBreedId)
     .then(cat => {
       loader.style.display = 'none';
       catInfo.innerHTML = `
-        <img src="${cat.url}" alt="${cat.breeds[0].name}" width="300" height="300">
+        <img src="${cat.url}" alt="${cat.breeds[0].name}" width="400" height="300">
         <h2>${cat.breeds[0].name}</h2>
         <p>Description: ${cat.breeds[0].description}</p>
         <p>Temperament: ${cat.breeds[0].temperament}</p>
