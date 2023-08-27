@@ -5,154 +5,154 @@ import SlimSelect from 'slim-select';
 import { fetchBreeds } from './cat-api';
 import { fetchCatByBreed } from './cat-api';
 
-// axios.defaults.headers.common['x-api-key'] =
-//   'live_vpT8AlM2UzkT2NU9PvSi7LYErckhMQOSy2G7GM3Q13VkTLIhMAj8zKURMQiz92zB';
+axios.defaults.headers.common['x-api-key'] =
+  'live_vpT8AlM2UzkT2NU9PvSi7LYErckhMQOSy2G7GM3Q13VkTLIhMAj8zKURMQiz92zB';
 
-// const breedSelect = document.querySelector('.breed-select');
-// const catInfo = document.querySelector('.cat-info');
-// const loader = document.querySelector('.loader');
-// const error = document.querySelector('.error');
-// const selectOption = document.querySelector('.select-option')
+const breedSelect = document.querySelector('.breed-select');
+const catInfo = document.querySelector('.cat-info');
+const loader = document.querySelector('.loader');
+const error = document.querySelector('.error');
+const selectOption = document.querySelector('.select-option')
 
-// breedSelect.addEventListener('change', handleBreedSelectChange);
+breedSelect.addEventListener('change', handleBreedSelectChange);
 
-// function handleFetchError() {
-//   loader.style.display = 'none';
-//   error.style.display = 'block';
-//   breedSelect.style.display = 'none';
-//   setTimeout(() => {
-//     breedSelect.style.display = 'block';
-//     breedSelect.value = '';
-//   }, 500);
+function handleFetchError() {
+  loader.style.display = 'none';
+  error.style.display = 'block';
+  breedSelect.style.display = 'none';
+  setTimeout(() => {
+    breedSelect.style.display = 'block';
+    breedSelect.value = '';
+  }, 500);
+}
+
+function handleFetchSuccess(breeds) {
+  loader.style.display = 'none';
+  setTimeout(() => {
+    breedSelect.style.display= 'block'
+    const option = breeds
+      .map(breed => `<option value="${breed.id}">${breed.name}</option>`)
+      .join('');
+    breedSelect.insertAdjacentHTML('beforeend', option);
+  }, 500);
+}
+
+function handleBreedSelectChange() {
+  const selectedBreedId = breedSelect.value;
+  loader.style.display = 'block';
+  catInfo.style.display = 'none';
+  error.style.display = 'none'; l
+
+  fetchCatByBreed(selectedBreedId)
+    .then(cat => {
+      loader.style.display = 'none';
+      catInfo.innerHTML = `
+        <img src="${cat.url}" alt="${cat.breeds[0].name}" width="300" height="300">
+        <h2>${cat.breeds[0].name}</h2>
+        <p>Description: ${cat.breeds[0].description}</p>
+        <p>Temperament: ${cat.breeds[0].temperament}</p>
+      `;
+      catInfo.style.display = 'block';
+      console.log(cat);
+    })
+    .catch(handleFetchError);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  loader.style.display = 'block';
+  error.style.display = 'none';
+  breedSelect.style.display = 'none'
+  fetchBreeds().then(handleFetchSuccess).catch(handleFetchError);
+});
+
+// const BASE_URL = 'https://restcountries.com/v3.1/name/';
+// const DEBOUNCE_DELAY = 300;
+// const list = document.querySelector('.country-list');
+// const country = document.querySelector('.country-info');
+
+// function fetchCountries(name) {
+//   return fetch(
+//     `${BASE_URL}${name}?fields=name,capital,population,flags,languages`
+//   ).then(responce => {
+//     if (!responce.ok) {
+//       throw new Error(
+//         Notiflix.Notify.failure('Oops, there is no country with that name')
+//       );
+//     }
+//     const result = responce.json();
+//     return result;
+//   });
 // }
 
-// function handleFetchSuccess(breeds) {
-//   loader.style.display = 'none';
-//   setTimeout(() => {
-//     breedSelect.style.display= 'block'
-//     const option = breeds
-//       .map(breed => `<option value="${breed.id}">${breed.name}</option>`)
-//       .join('');
-//     breedSelect.insertAdjacentHTML('beforeend', option);
-//   }, 500);
+// const input = document.querySelector('#search-box');
+
+// input.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
+
+// function onInput(evt) {
+//   const search = evt.target.value.trim();
+//   if (!search) {
+//     list.innerHTML = '';
+//     country.innerHTML = '';
+//     return;
+//   }
+//   fetchCountries(search).then(filterCountries);
 // }
 
-// function handleBreedSelectChange() {
-//   const selectedBreedId = breedSelect.value;
-//   loader.style.display = 'block';
-//   catInfo.style.display = 'none';
-//   error.style.display = 'none';
-
-//   fetchCatByBreed(selectedBreedId)
-//     .then(cat => {
-//       loader.style.display = 'none';
-//       catInfo.innerHTML = `
-//         <img src="${cat.url}" alt="${cat.breeds[0].name}" width="300" height="300">
-//         <h2>${cat.breeds[0].name}</h2>
-//         <p>Description: ${cat.breeds[0].description}</p>
-//         <p>Temperament: ${cat.breeds[0].temperament}</p>
-//       `;
-//       catInfo.style.display = 'block';
-//       console.log(cat);
-//     })
-//     .catch(handleFetchError);
+// function filterCountries(countries) {
+//   if (countries.length > 10) {
+//     return Notiflix.Notify.info(
+//       'Too many matches found. Please enter a more specific name.'
+//     );
+//   } else if (countries.length > 1 && countries.length <= 10) {
+//     clear()
+//     createList(countries);
+//   } else if (countries.length === 1) {
+//     clear()
+//     createInfo(countries);
+//   }
+//   console.log(countries);
 // }
 
-// window.addEventListener('DOMContentLoaded', () => {
-//   loader.style.display = 'block';
-//   error.style.display = 'none';
-//   breedSelect.style.display = 'none'
-//   fetchBreeds().then(handleFetchSuccess).catch(handleFetchError);
-// });
+// function createList(countries) {
+//   const listItem = countries
+//     .map(
+//       ({ name, flags }) =>
+//         `<li>
+//         <img src="${flags.svg}" width="50" height="30" alt="${flags.alt}">
+//         <p>${name.common}</p>
+//     </li>`
+//     )
+//     .join('');
 
-const BASE_URL = 'https://restcountries.com/v3.1/name/';
-const DEBOUNCE_DELAY = 300;
-const list = document.querySelector('.country-list');
-const country = document.querySelector('.country-info');
+//   list.insertAdjacentHTML('beforeend', listItem);
+//   console.log(listItem);
+// }
 
-function fetchCountries(name) {
-  return fetch(
-    `${BASE_URL}${name}?fields=name,capital,population,flags,languages`
-  ).then(responce => {
-    if (!responce.ok) {
-      throw new Error(
-        Notiflix.Notify.failure('Oops, there is no country with that name')
-      );
-    }
-    const result = responce.json();
-    return result;
-  });
-}
+// function createInfo(countries) {
+//   const [
+//     {
+//       name: { common },
+//       flags: { svg, alt },
+//       capital,
+//       population,
+//       languages,
+//     },
+//   ] = countries;
+//   const info = `<div>
+//     <img src="${svg}" alt="${alt}" width="50px" height="30px">
+//     <p>${common}</p>
+//   </div>
+//   <p>Capital: <span>${capital}</span></p>
+//   <p>Population: <span>${population}</span></p>
+//   <p>Languages: <span>${Object.values(languages).join(', ')}</span></p>`;
 
-const input = document.querySelector('#search-box');
+//   country.innerHTML = info;
+// }
 
-input.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
+// function clear() {
+//   country.innerHTML = '';
+//   list.innerHTML = '';
 
-function onInput(evt) {
-  const search = evt.target.value.trim();
-  if (!search) {
-    list.innerHTML = '';
-    country.innerHTML = '';
-    return;
-  }
-  fetchCountries(search).then(filterCountries);
-}
-
-function filterCountries(countries) {
-  if (countries.length > 10) {
-    return Notiflix.Notify.info(
-      'Too many matches found. Please enter a more specific name.'
-    );
-  } else if (countries.length > 1 && countries.length <= 10) {
-    clear()
-    createList(countries);
-  } else if (countries.length === 1) {
-    clear()
-    createInfo(countries);
-  }
-  console.log(countries);
-}
-
-function createList(countries) {
-  const listItem = countries
-    .map(
-      ({ name, flags }) =>
-        `<li>
-        <img src="${flags.svg}" width="50" height="30" alt="${flags.alt}">
-        <p>${name.common}</p>
-    </li>`
-    )
-    .join('');
-
-  list.insertAdjacentHTML('beforeend', listItem);
-  console.log(listItem);
-}
-
-function createInfo(countries) {
-  const [
-    {
-      name: { common },
-      flags: { svg, alt },
-      capital,
-      population,
-      languages,
-    },
-  ] = countries;
-  const info = `<div>
-    <img src="${svg}" alt="${alt}" width="50px" height="30px">
-    <p>${common}</p>
-  </div>
-  <p>Capital: <span>${capital}</span></p>
-  <p>Population: <span>${population}</span></p>
-  <p>Languages: <span>${Object.values(languages).join(', ')}</span></p>`;
-
-  country.innerHTML = info;
-}
-
-function clear() {
-  country.innerHTML = '';
-  list.innerHTML = '';
-}
 
 // "Гра на вгадування слів або чисел":
 

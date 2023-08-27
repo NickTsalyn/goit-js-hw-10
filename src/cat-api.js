@@ -16,7 +16,7 @@ export function fetchBreeds() {
       .then(response => response.data[0])
       .catch(error => {
         throw new Error(
-            Notiflix.Notify.failure("`${error.textContent}`")
+            Notiflix.Notify.failure(`${error.textContent}`)
         );
       });
   }
