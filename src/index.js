@@ -164,97 +164,97 @@ window.addEventListener('DOMContentLoaded', () => {
 
 // Користувач має вгадати загадане випадкове число від 1 до 100. Він має 5 спроб на вгадування. При кожній спробі гра повідомляє користувачу, чи було введене число більше чи менше загаданого, і скільки спроб залишилось. Коли користувач вгадує число або вичерпує ліміт спроб, гра закінчується.
 
-// const input = document.querySelector('#guessInput');
-// const button = document.querySelector('#btn');
-// const text = document.querySelector('#message');
-// const clearButton = document.querySelector('#clear-btn');
-// const timer = document.querySelector('#timer');
+const input = document.querySelector('#guessInput');
+const button = document.querySelector('#btn');
+const text = document.querySelector('#message');
+const clearButton = document.querySelector('#clear-btn');
+const timer = document.querySelector('#timer');
 
-// const requiredInput = getRandomNumber();
-// let tryAmount = 4;
-// let startGame = false;
-// let timeInterval;
-// let inputValue;
+const requiredInput = getRandomNumber();
+let tryAmount = 4;
+let startGame = false;
+let timeInterval;
+let inputValue;
 
-// input.addEventListener('input', onInput);
-// button.addEventListener('click', onClick);
-// clearButton.addEventListener('click', clear);
+input.addEventListener('input', onInput);
+button.addEventListener('click', onClick);
+clearButton.addEventListener('click', clear);
 
-// function onInput(evt) {
-//   inputValue = evt.target.value.trim();
-//   console.log(inputValue);
-//   if (!startGame) {
-//     startGame = true;
-//     startCountdown();
-//   }
-// }
+function onInput(evt) {
+  inputValue = evt.target.value.trim();
+  console.log(inputValue);
+  if (!startGame) {
+    startGame = true;
+    startCountdown();
+  }
+}
 
-// function onClick() {
-//   const guessNumber = parseInt(inputValue);
-//   if ((guessNumber || guessWord) === requiredInput) {
-//     text.textContent = 'Вітаю ви вгадали';
-//     button.disabled = true;
-//     clearButton.disabled = false;
-//     clearInterval(timeInterval);
-//     timer.textContent = '';
-//   } else {
-//     text.textContent = `Мимо, залишилось ${tryAmount--} спроби`;
-//     clearButton.disabled = true;
-//     if (tryAmount < 0) {
-//       text.style.fontSize = '36px';
-//       text.textContent = 'Ви програли(((';
-//       button.disabled = true;
-//       clearButton.disabled = false;
-//       clearInterval(timeInterval);
-//       timer.textContent = '';
-//     }
-//   }
-// }
+function onClick() {
+  const guessNumber = parseInt(inputValue);
+  if ((guessNumber || guessWord) === requiredInput) {
+    text.textContent = 'Вітаю ви вгадали';
+    button.disabled = true;
+    clearButton.disabled = false;
+    clearInterval(timeInterval);
+    timer.textContent = '';
+  } else {
+    text.textContent = `Мимо, залишилось ${tryAmount--} спроби`;
+    clearButton.disabled = true;
+    if (tryAmount < 0) {
+      text.style.fontSize = '36px';
+      text.textContent = 'Ви програли(((';
+      button.disabled = true;
+      clearButton.disabled = false;
+      clearInterval(timeInterval);
+      timer.textContent = '';
+    }
+  }
+}
 
-// function clear() {
-//   tryAmount = 4;
-//   text.textContent = '';
-//   inputValue = '';
-//   input.value = '';
-//   button.disabled = false;
-//   clearButton.disabled = true;
-// }
+function clear() {
+  tryAmount = 4;
+  text.textContent = '';
+  inputValue = '';
+  input.value = '';
+  button.disabled = false;
+  clearButton.disabled = true;
+}
 
-// function getRandomNumber() {
-//   return Math.floor(Math.random() * 100 + 1);
-// }
+function getRandomNumber() {
+  return Math.floor(Math.random() * 100 + 1);
+}
 
-// function countdown() {
-//   let minutes = 2;
-//   let seconds = minutes * 60;
-//   timeInterval = setInterval(function () {
-//     seconds--;
-//     if (seconds >= 0) {
-//       const minutesRemain = Math.floor(seconds / 60);
-//       const secondsRemain = seconds % 60;
+function countdown() {
+  let minutes = 2;
+  let seconds = minutes * 60;
+  timeInterval = setInterval(function () {
+    seconds--;
+    if (seconds >= 0) {
+      const minutesRemain = Math.floor(seconds / 60);
+      const secondsRemain = seconds % 60;
 
-//       timer.textContent = `${minutesRemain}:${secondsRemain
-//         .toString()
-//         .padStart(2, '0')}`;
-//     } else {
-//       clearInterval(timeInterval);
-//       timer.textContent = '';
-//     }
-//   }, 1000);
-// }
+      timer.textContent = `${minutesRemain}:${secondsRemain
+        .toString()
+        .padStart(2, '0')}`;
+    } else {
+      clearInterval(timeInterval);
+      timer.textContent = '';
+    }
+  }, 1000);
+}
 
-// function startCountdown() {
-//   countdown();
-// }
+function startCountdown() {
+  countdown();
+}
 
-// document.addEventListener('keydown', evt => {
-//   if (evt.key === 'Escape') {
-//     if (clearButton.disabled) {
-//       return;
-//     } else {
-//       clear();
-//     }
-//   } else if (evt.key === 'Enter') {
-//     onClick();
-//   }
-// });
+document.addEventListener('keydown', evt => {
+  if (evt.key === 'Escape') {
+    if (clearButton.disabled) {
+      return;
+    } else {
+      clear();
+    }
+  } else if (evt.key === 'Enter') {
+    onClick();
+  }
+});
